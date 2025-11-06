@@ -43,7 +43,11 @@ class GameRuleMapping {
 			'int' => IntGameRule::class,
 			'float' => FloatGameRule::class,
 		};
-		return new $class(self::convertVal($internal, $val), false);
+		$v = self::convertVal($internal, $val);
+		if ($v !== $schema['default']) {
+			return new $class($v, false);
+		}
+		return null;
 	}
 
 	public static function convertVal(string $internal, $val) {
